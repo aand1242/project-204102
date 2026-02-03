@@ -7,10 +7,9 @@ import javax.imageio.ImageIO;
 public class Main {
     public static void main(String[] args) {
         JFrame screen = new JFrame();
-        screen.setSize(640,360);
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         try{
-            File backgroundpath = new File("C:\\Users\\natha\\Documents\\project\\source_pic\\bordtest.jpg");
+            File backgroundpath = new File("source_pic\\background.jpg\\");
             BufferedImage background =  ImageIO.read(backgroundpath);
             ImageIcon icon = new ImageIcon(background);
             JLabel label = new JLabel(icon);
@@ -19,6 +18,7 @@ public class Main {
             System.out.println("i cant see");
         }
         
+        screen.pack();
         
         screen.setVisible(true);
     }
