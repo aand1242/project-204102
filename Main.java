@@ -20,7 +20,7 @@ public class Main {
         background bg = new background();
         bg.add(boardPanel);
         screen.add(bg);
-        // screen.pack();
+        screen.pack();
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         screen.setResizable(false);
         screen.setVisible(true);
