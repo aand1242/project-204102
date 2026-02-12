@@ -2,6 +2,7 @@ package Main;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.xml.stream.FactoryConfigurationError;
 
 
 public class Main {
@@ -12,23 +13,32 @@ public class Main {
     public static final int width = 360;
     
     public static void main(String[] args) {
+        // screen create
+        JFrame screen = new JFrame();
+        screen.setSize(height,width);
 
         Board board = new Board();
         
         GameControl gameLogic = new GameControl(board);
 
-        BoardGUI boardPanel = new BoardGUI(gameLogic);
-        gameLogic.setBordGUI(boardPanel);
-        boardPanel.setPiece(board.getBoard());
+        BoardGUI boardUI = new BoardGUI(gameLogic);
+        boardUI.setPreferredSize(new Dimension(288,288));
+        gameLogic.setBordGUI(boardUI);
+        boardUI.setPiece(board.getBoard());
 
-        boardPanel.setPreferredSize(new Dimension(288,288));
+        ItemslotGUI leftslot = new ItemslotGUI();
+        leftslot.setPreferredSize(new Dimension(156,360));
+        leftslot.setBackground(Color.DARK_GRAY);
+        ItemslotGUI rightslot = new ItemslotGUI();
+        rightslot.setPreferredSize(new Dimension(156,360));
+        rightslot.setBackground(Color.DARK_GRAY);
 
-        JFrame screen = new JFrame();
-        screen.setSize(height,width);
-        // screen.setLayout(new GridBagLayout());
         
         Background bg = new Background();
-        bg.add(boardPanel);
+        bg.add(leftslot);
+        bg.add(boardUI);
+        bg.add(rightslot);
+        // screen setting for JFrame
         screen.add(bg);
         
         screen.pack();

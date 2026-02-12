@@ -1,5 +1,6 @@
 package Main;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
@@ -19,7 +20,8 @@ public class Background extends JPanel {
             System.out.println("I cant see the image");
         }
     }
-    
+
+
     @Override
     public Dimension getPreferredSize() {
         // คืนค่าขนาดที่ต้องการ เพื่อให้ screen.pack() ปรับขนาดหน้าต่างตามนี้
