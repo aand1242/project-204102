@@ -20,6 +20,9 @@ public class King extends Piece {
         }
 
         //เข้าป้อม ค่อยทำ งง จะตาย
+        if (hasMoved == false  ){
+
+        }
 
         return false;
     }

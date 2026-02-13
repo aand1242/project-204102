@@ -1,5 +1,6 @@
 package Main;
 
+import Piece.King;
 import Piece.Piece;
 import java.awt.*;
 
@@ -78,7 +79,7 @@ public class GameControl {
                 Piece selectedPiece = board.getPiece(selectedRow, selectedCol);
                 
                 if (selectedPiece.canMove(selectedRow, selectedCol, r, c, board)) {
-
+                    
                     board.movePiece(selectedRow, selectedCol, r, c);
 
                     //-----DEBUG-----
@@ -114,7 +115,7 @@ public class GameControl {
                 
                 // ถามหมากตัวนั้นว่า "เดินไปช่อง (i, j) ได้ไหม?"
                 // (ต้องมั่นใจว่า canMove เช็คเรื่อง isPathClear และ ห้ามกินพวกเดียวกันแล้ว)
-                if (p.canMove(r, c, i, j, board)) {
+                if (p.canMove(r, c, i, j, board) ) {
                     
                     Piece target = board.getPiece(i, j);
                     
@@ -132,4 +133,64 @@ public class GameControl {
         // ไฮไลท์ตัวที่ถูกเลือกด้วย (สีเหลือง) จะได้รู้ว่าเลือกตัวไหนอยู่
         //boardGUI.highlightButton(r, c, new Color(254, 225, 175));
     }
+
+    public boolean isMoveSafe(int startRow, int startCol, int targetRow, int targetCol) {
+        
+        // 1. สร้างกระดานจำลอง
+        Board memBoard = board.getCopy();
+
+        // 2. จำลองการเดิน (Simulate Move)
+        // ย้ายจากจุดเดิม ไปจุดใหม่
+        Piece movingPiece = memBoard.getPiece(startRow, startCol);
+        memBoard.setPiece(targetRow, targetCol, movingPiece); // วางที่ใหม่
+        memBoard.setPiece(startRow, startCol, null);          // ลบที่เก่า
+        
+        // (ถ้า Piece มีตัวแปร row/col ข้างใน ต้องอัปเดตตรงนี้ด้วย ไม่งั้น p.getRow() จะได้ค่าเดิม)
+        // if(movingPiece != null) { movingPiece.setRow(targetRow); movingPiece.setCol(targetCol); }
+
+        // ---------------------------------------------
+        // 3. เริ่มเช็คว่า King ปลอดภัยไหม
+        // ---------------------------------------------
+
+        // หา King ของฝ่ายเรา (ดูจาก turn หรือสีของตัวที่เดิน)
+        // ใช้ movingPiece.isWhite ในการเช็คสี เพราะบางที currentTurn อาจสลับไปแล้วถ้าเรียกผิดจังหวะ
+        boolean myColor = (movingPiece != null) ? movingPiece.isWhite : currentTurn; 
+        
+        int kingRow = -1, kingCol = -1;
+
+        // วนลูปหา King ในกระดานจำลอง
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                Piece p = memBoard.getPiece(r, c);
+                if (p != null && p.getClass() == King.class && p.isWhite == myColor) {
+                    kingRow = r;
+                    kingCol = c;
+                    break;
+                }
+            }
+        }
+        
+        // ถ้าหา King ไม่เจอ (ไม่ควรเกิดขึ้น)
+        if (kingRow == -1) return false;
+
+        // เช็คศัตรูทุกตัวในกระดานจำลอง
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                Piece enemy = memBoard.getPiece(r, c);
+                // ถ้าเป็นศัตรู
+                if (enemy != null && enemy.isWhite != myColor) {
+                    // ถามศัตรูว่า "ในกระดานจำลองนี้ นายกิน King ฉันถึงไหม?"
+                    if (enemy.canMove(r, c, kingRow, kingCol, memBoard)) {
+                        return false; // ไม่ปลอดภัย (โดนรุก)
+                    }
+                }
+            }
+        }
+
+        return true; // ปลอดภัย
+    }
+}
+class castling {
+
+    
 }

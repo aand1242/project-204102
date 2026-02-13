@@ -58,6 +58,28 @@ public class Board {
         return board;
     }
 
+    public Board getCopy() {
+        Board newBoard = new Board();
+
+        // ล้างกระดาน
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                newBoard.setPiece(r, c, null);
+            }
+        }
+
+        // วางหมากโดยลอกจากกระดานเดิม
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                Piece p = this.getPiece(r, c);
+                if (p != null)
+                    newBoard.setPiece(r, c, p);
+            }
+        }
+
+        return newBoard;
+    }
+
     // เช็กว่ามีหมากตัวอื่นขวางทางที่จะเดินหรือเปล่า
     public boolean isPathClaer(int oldRow, int oldCol, int newRow, int newCol) {
         // หาทิศทาง
@@ -79,5 +101,8 @@ public class Board {
 
         // ไม่มีหมากขวางทาง
         return true;
+    }
+    public void setPiece(int r, int c, Piece p) {
+        board[r][c] = p;
     }
 }

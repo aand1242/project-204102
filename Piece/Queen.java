@@ -4,6 +4,7 @@ import Main.Board;
 
 public class Queen extends Piece {
     
+    
     public Queen(boolean isWhite, int row, int col) {
         super(isWhite, row, col);
     }
@@ -13,6 +14,8 @@ public class Queen extends Piece {
     public boolean canMove(int oldRow, int oldCol, int newRow, int newCol, Board board) {
         int rowDiff = Math.abs(newRow - oldRow);
         int colDiff = Math.abs(newCol - oldCol);
+        
+        
         
         // เดินปกติ (แนวบวกและแนวทแยง)
         if (rowDiff == colDiff || rowDiff == 0 || colDiff == 0) {
