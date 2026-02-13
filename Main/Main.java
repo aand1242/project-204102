@@ -24,7 +24,7 @@ public class Main {
         JPanel middle = new JPanel();
         middle.setPreferredSize(new Dimension(328,328));
         middle.setLayout(new GridBagLayout());
-        middle.setOpaque(true);
+        middle.setOpaque(false);
         
         BoardGUI boardUI = new BoardGUI(gameLogic);
         boardUI.setPreferredSize(new Dimension(288,288));
@@ -35,6 +35,7 @@ public class Main {
         
         JPanel midslot = new JPanel();
         midslot.setPreferredSize(new Dimension(328,360));
+        midslot.setOpaque(false);
         midslot.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         // 1. บอกตำแหน่งพิกัดในตาราง (ถ้ามีอันเดียวก็เริ่มที่ 0)
@@ -48,13 +49,20 @@ public class Main {
 
         midslot.add(middle, gbc);  
 
+        Player white = new Player();
+        Player black = new Player();
+        gameLogic.setPlayer(white, black);
 
-        ItemslotGUI leftslot = new ItemslotGUI();
+        ItemslotGUI leftslot = new ItemslotGUI(white.getScore());
         leftslot.setPreferredSize(new Dimension(156,360));
+        leftslot.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 44));
         leftslot.setBackground(Color.DARK_GRAY);
-        ItemslotGUI rightslot = new ItemslotGUI();
+        ItemslotGUI rightslot = new ItemslotGUI(black.getScore());
         rightslot.setPreferredSize(new Dimension(156,360));
+        rightslot.setBorder(BorderFactory.createEmptyBorder(0, 44, 0, 0));
         rightslot.setBackground(Color.DARK_GRAY);
+
+        gameLogic.setItemscore(leftslot, rightslot);
 
         Background bg = new Background();
         bg.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));

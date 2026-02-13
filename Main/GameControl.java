@@ -7,6 +7,12 @@ public class GameControl {
 
     private Board board;
     private BoardGUI boardGUI;
+    
+    private Player black;
+    private Player white;
+
+    private ItemslotGUI leftGui;
+    private ItemslotGUI rightGui;
 
     private int selectedRow;
     private int selectedCol;
@@ -20,6 +26,14 @@ public class GameControl {
 
     public void setBordGUI(BoardGUI BoardGUI){
         boardGUI = BoardGUI;
+    }
+    public void setPlayer(Player w, Player b){
+        white = w;
+        black = b;
+    }
+    public void setItemscore(ItemslotGUI k,ItemslotGUI l){
+        leftGui = k;
+        rightGui = l;
     }
 
     public void processClick(int r, int c) {
@@ -70,7 +84,13 @@ public class GameControl {
                     //-----DEBUG-----
                         System.out.printf("Move %s from (%d, %d) to (%d %d)\n", selectedPiece.getClass().getSimpleName(), selectedRow, selectedCol, r, c);
                     //---------------
-                    
+                    if (currentTurn == true) {
+                        white.addScore(1);
+                        leftGui.changeScore(white.getScore());
+                    }else{
+                        black.addScore(1);
+                        rightGui.changeScore(black.getScore());
+                    }
                     
                     isPieceSelected = false;
                     currentTurn = !currentTurn;
