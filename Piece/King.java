@@ -20,8 +20,15 @@ public class King extends Piece {
         }
 
         //เข้าป้อม ค่อยทำ งง จะตาย
-        if (hasMoved == false  ){
-
+        if (isWhite){
+            if ((this.hasMoved() == false && board.getPiece(0, 0) instanceof Rook && board.getPiece(0, 0).hasMoved() == false && rowDiff == 2 && colDiff == 0)|| (this.hasMoved() == false && board.getPiece(7, 0).getClass().getSimpleName().equals("Rook") && board.getPiece(7, 0).hasMoved() == false && rowDiff == 2 && colDiff == 0) ){
+                
+                return true;
+            }
+        }else{
+            if ((this.hasMoved() == false && board.getPiece(0, 7)instanceof Rook && board.getPiece(0, 7).hasMoved() == false && rowDiff == 2 && colDiff == 0)|| (this.hasMoved() == false && board.getPiece(7, 7).getClass().getSimpleName().equals("Rook") && board.getPiece(7, 7).hasMoved() == false && rowDiff == 2 && colDiff == 0) ){
+                return true;
+            }
         }
 
         return false;

@@ -2,6 +2,8 @@ package Main;
 
 import Piece.King;
 import Piece.Piece;
+import Piece.Queen;
+
 import java.awt.*;
 
 public class GameControl {
@@ -80,10 +82,21 @@ public class GameControl {
                 
                 if (selectedPiece.canMove(selectedRow, selectedCol, r, c, board)) {
                     
-                    board.movePiece(selectedRow, selectedCol, r, c);
+                    if (selectedPiece instanceof King && Math.abs(selectedRow - r) == 2){
+                        if (r < 4 && board.isPathClaer(selectedRow, selectedCol, r-1, c)){
+                            board.movePiece(selectedRow, selectedCol, r, c);
+                            board.movePiece(0, selectedCol, r+1, c);
+                        }else if (r > 4 ) {
+                            board.movePiece(selectedRow, selectedCol, r, c);
+                            board.movePiece(7, selectedCol, r-1, c);
+                        }
+
+                    }else{
+                        board.movePiece(selectedRow, selectedCol, r, c);
+                    }
 
                     //-----DEBUG-----
-                        System.out.printf("Move %s from (%d, %d) to (%d %d)\n", selectedPiece.getClass().getSimpleName(), selectedRow, selectedCol, r, c);
+                        System.out.printf("Move %s from (%d, %d) to (%d, %d)\n", selectedPiece.getClass().getSimpleName(), selectedRow, selectedCol, r, c);
                     //---------------
                     if (currentTurn == true) {
                         white.addScore(1);
