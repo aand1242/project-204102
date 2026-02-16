@@ -30,11 +30,13 @@ public abstract class Piece {
         return hasMoved;
     }
 
-    public void setHasMoved() {
-        this.hasMoved = true;
+    public void setHasMoved(boolean m) {
+        this.hasMoved = m;
     }
 
     public abstract boolean canMove(int oldRow, int oldCol, int newRow, int newCol, Board board);
 
     public abstract int getScore();
+    
+    public abstract Piece getCopy();
 }

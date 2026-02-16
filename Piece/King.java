@@ -36,5 +36,12 @@ public class King extends Piece {
 
     @Override
     public int getScore() { return 10000; }
+    
+    @Override
+    public Piece getCopy() {
+        King new_p = new King(this.isWhite, this.row, this.col);
+        new_p.setHasMoved(this.hasMoved);
+        return new_p;
+    };
 
 }

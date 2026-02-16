@@ -28,6 +28,13 @@ public class Queen extends Piece {
 
     @Override
     public int getScore() { return 9; }
+    
+    @Override
+    public Piece getCopy() {
+        Queen new_p = new Queen(this.isWhite, this.row, this.col);
+        new_p.setHasMoved(this.hasMoved);
+        return new_p;
+    };
 
 
 }

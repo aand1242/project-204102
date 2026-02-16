@@ -80,7 +80,7 @@ public class GameControl {
                 // เดิน หรือ กินฝ่ายตรงข้าม
                 Piece selectedPiece = board.getPiece(selectedRow, selectedCol);
                 
-                if (selectedPiece.canMove(selectedRow, selectedCol, r, c, board)) {
+                if (selectedPiece.canMove(selectedRow, selectedCol, r, c, board)&& isMoveSafe(selectedRow, selectedCol, r, c)) {
                     
                     if (selectedPiece instanceof King && Math.abs(selectedRow - r) == 2){
                         if (r < 4 && board.isPathClaer(selectedRow, selectedCol, r-1, c)){

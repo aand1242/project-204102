@@ -50,7 +50,7 @@ public class Board {
     // เดินหมาก
     public void movePiece(int startRow, int startCol, int endRow, int endCol) {
         board[endRow][endCol] = board[startRow][startCol];
-        board[endRow][endCol].setHasMoved();
+        board[endRow][endCol].setHasMoved(true);
         board[startRow][startCol] = null;
     }
 

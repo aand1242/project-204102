@@ -26,4 +26,11 @@ public class Rook extends Piece {
     @Override
     public int getScore() { return 5; }
 
+    @Override
+    public Piece getCopy() {
+        Rook new_p = new Rook(this.isWhite, this.row, this.col);
+        new_p.setHasMoved(this.hasMoved);
+        return new_p;
+    };
+
 }

@@ -26,4 +26,11 @@ public class Bishop extends Piece {
     @Override
     public int getScore() { return 3; }
 
+    @Override
+    public Piece getCopy() {
+        Bishop new_p = new Bishop(this.isWhite, this.row, this.col);
+        new_p.setHasMoved(this.hasMoved);
+        return new_p;
+    };
+
 }

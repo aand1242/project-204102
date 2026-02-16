@@ -25,4 +25,10 @@ public class Knight extends Piece {
     @Override
     public int getScore() { return 3; }
 
+    @Override
+    public Piece getCopy() {
+        Knight new_p = new Knight(this.isWhite, this.row, this.col);
+        new_p.setHasMoved(this.hasMoved);
+        return new_p;
+    };
 }
