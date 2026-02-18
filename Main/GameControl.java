@@ -1,13 +1,20 @@
 package Main;
 
+import Piece.Bishop;
 import Piece.King;
+import Piece.Knight;
+import Piece.Pawn;
 import Piece.Piece;
 import Piece.Queen;
+import Piece.Rook;
 
 import java.awt.*;
 
-public class GameControl {
 
+public class GameControl {
+    private String promo ;
+    private Tranfrom tranfrom;
+ 
     private Board board;
     private BoardGUI boardGUI;
     
@@ -37,6 +44,9 @@ public class GameControl {
     public void setItemscore(ItemslotGUI k,ItemslotGUI l){
         leftGui = k;
         rightGui = l;
+    }
+    public void setTranfrom(Tranfrom x){
+        tranfrom = x;
     }
 
     public void processClick(int r, int c) {
@@ -81,7 +91,7 @@ public class GameControl {
                 Piece selectedPiece = board.getPiece(selectedRow, selectedCol);
                 
                 if (selectedPiece.canMove(selectedRow, selectedCol, r, c, board)&& isMoveSafe(selectedRow, selectedCol, r, c)) {
-                    
+                    // กรณีเข้าป้อม !!
                     if (selectedPiece instanceof King && Math.abs(selectedRow - r) == 2){
                         if (r < 4 && board.isPathClaer(selectedRow, selectedCol, r-1, c)){
                             board.movePiece(selectedRow, selectedCol, r, c);
@@ -94,29 +104,34 @@ public class GameControl {
                     }else{
                         board.movePiece(selectedRow, selectedCol, r, c);
                     }
+                    
+                    boolean isWhitePromotion = selectedPiece.isWhite() && selectedCol == 7;
+                    boolean isBlackPromotion = !selectedPiece.isWhite() && selectedCol == 0;
+
+                    if (selectedPiece instanceof Pawn && (isWhitePromotion || isBlackPromotion)) {
+                        
+                        tranfrom.preparePromotion(selectedRow, selectedCol, currentTurn, this);
+                        tranfrom.setVisible(true);
+                        return; 
+                    } else {
+                        // เดินปกติเสร็จแล้วเรียก endTurn()
+                        endTurn();
+                    }
 
                     //-----DEBUG-----
                         System.out.printf("Move %s from (%d, %d) to (%d, %d)\n", selectedPiece.getClass().getSimpleName(), selectedRow, selectedCol, r, c);
                     //---------------
-                    if (currentTurn == true) {
-                        white.addScore(1);
-                        leftGui.changeScore(white.getScore());
-                    }else{
-                        black.addScore(1);
-                        rightGui.changeScore(black.getScore());
-                    }
                     
-                    isPieceSelected = false;
-                    currentTurn = !currentTurn;
-
-                    boardGUI.resetColors();
-                    boardGUI.setPiece(board.getBoard());
                 }
             }
             
 
         }
 
+    }
+
+    public void tranfrom(String s){
+        promo = s;
     }
 
     private void highlightPossibleMoves(int r, int c) {
@@ -202,8 +217,34 @@ public class GameControl {
 
         return true; // ปลอดภัย
     }
-}
-class castling {
+    public void executePromotion(String pieceType, int r, int c, boolean isWhite) {
+        Piece newPiece;
+        switch (pieceType) {
+            case "Rook":   newPiece = new Rook(isWhite, r, c); break;
+            case "Knight": newPiece = new Knight(isWhite, r, c); break;
+            case "Bishop": newPiece = new Bishop(isWhite, r, c); break;
+            default:       newPiece = new Queen(isWhite, r, c); break;
+        }
 
-    
+        board.setPiece(r, c, newPiece);
+        
+        // ใช้ endTurn() ที่เราคุยกันก่อนหน้ามาใส่ตรงนี้ได้เลย
+        endTurn(); 
+    }
+
+    private void endTurn() {
+        // ย้าย logic สลับเทิร์นและอัปเดต GUI มาไว้ที่นี่
+        if (currentTurn == true) {
+            white.addScore(1);
+            leftGui.changeScore(white.getScore());
+        }else{
+            black.addScore(1);
+            rightGui.changeScore(black.getScore());
+        }
+        isPieceSelected = false;
+        currentTurn = !currentTurn;
+        boardGUI.resetColors();
+        boardGUI.setPiece(board.getBoard());
+        // ... อัปเดตคะแนน ...
+    }
 }

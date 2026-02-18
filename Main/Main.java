@@ -2,7 +2,7 @@ package Main;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.xml.stream.FactoryConfigurationError;
+// import javax.xml.stream.FactoryConfigurationError;
 
 
 public class Main {
@@ -15,7 +15,9 @@ public class Main {
     public static void main(String[] args) {
         // screen create
         JFrame screen = new JFrame();
+        JLayeredPane layer = new JLayeredPane();
         screen.setSize(height,width);
+        layer.setPreferredSize(new Dimension(height,width));
 
         Board board = new Board();
         
@@ -64,14 +66,22 @@ public class Main {
 
         gameLogic.setItemscore(leftslot, rightslot);
 
+        Tranfrom tranfromlayer = new Tranfrom();
+        gameLogic.setTranfrom(tranfromlayer);
+        tranfromlayer.setPreferredSize(new Dimension(200,200));
+        tranfromlayer.setBounds(220, 80, 200, 200);
+
         Background bg = new Background();
+        bg.setBounds(0,0 ,640,360);
         bg.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         bg.add(leftslot);
         bg.add(midslot);
         bg.add(rightslot);
         // screen setting for JFrame
-        screen.add(bg);
-        
+        layer.add(bg,JLayeredPane.DEFAULT_LAYER);
+        layer.add(tranfromlayer,JLayeredPane.MODAL_LAYER);
+
+        screen.add(layer);
         screen.pack();
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         screen.setResizable(false);

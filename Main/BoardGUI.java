@@ -10,10 +10,10 @@ import javax.swing.*;
 public class BoardGUI extends JPanel implements ActionListener{
 
     private ChessButton[][] buttons = new ChessButton[8][8];
-    private ImageIcon[] B_piece = {new ImageIcon("Main\\source_pic\\b_pawn.png"),new ImageIcon("Main\\source_pic\\b_rook.png"),new ImageIcon("Main\\source_pic\\b_knight.png") 
+    private static final ImageIcon[] B_piece = {new ImageIcon("Main\\source_pic\\b_pawn.png"),new ImageIcon("Main\\source_pic\\b_rook.png"),new ImageIcon("Main\\source_pic\\b_knight.png") 
            ,new ImageIcon("Main\\source_pic\\b_bishop.png"),new ImageIcon("Main\\source_pic\\b_king.png"),new ImageIcon("Main\\source_pic\\b_queen.png")
         };
-    private ImageIcon[] W_piece = {new ImageIcon("Main\\source_pic\\w_pawn.png"),new ImageIcon("Main\\source_pic\\w_rook.png"),new ImageIcon("Main\\source_pic\\w_knight.png") 
+    private static final ImageIcon[] W_piece = {new ImageIcon("Main\\source_pic\\w_pawn.png"),new ImageIcon("Main\\source_pic\\w_rook.png"),new ImageIcon("Main\\source_pic\\w_knight.png") 
            ,new ImageIcon("Main\\source_pic\\w_bishop.png"),new ImageIcon("Main\\source_pic\\w_king.png"),new ImageIcon("Main\\source_pic\\w_queen.png")
         };
     
