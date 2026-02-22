@@ -1,4 +1,4 @@
-package Main;
+package Main.logic;
 
 import Piece.Bishop;
 import Piece.King;

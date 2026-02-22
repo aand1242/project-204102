@@ -1,10 +1,12 @@
-package Main;
+package Main.UI;
 
 import Piece.Piece;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+
+import Main.logic.GameControl;
 
 
 public class BoardGUI extends JPanel implements ActionListener{

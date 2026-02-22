@@ -1,14 +1,17 @@
 package Piece;
 
-import Main.Board;
+import Main.logic.Board;
 
 public abstract class Piece {
-    public boolean isWhite;
-    public int row;
-    public int col;
-    public boolean hasMoved = false; // เช็กว่าเคยเดินหรือยัง สำหรับการเดินสองช่องในตาแรกของ pawn และการเข้าป้อมของ rook กับ king
 
-    public Piece(boolean isWhite, int row, int col) {
+    protected boolean isWhite;
+    protected int row;
+    protected int col;
+    protected boolean hasMoved = false; // เช็กว่าเคยเดินหรือยัง สำหรับการเดินสองช่องในตาแรกของ pawn และการเข้าป้อมของ rook กับ king
+    protected boolean superMove = false; // ใช้ตรวจสอบสถานะการใช้ไอเทม Unicorn (Knight), Move+ (Pawn)
+    protected boolean hasShield = false;
+
+    protected Piece(boolean isWhite, int row, int col) {
         this.isWhite = isWhite;
         this.row = row;
         this.col = col;
@@ -30,13 +33,25 @@ public abstract class Piece {
         return hasMoved;
     }
 
-    public void setHasMoved(boolean m) {
-        this.hasMoved = m;
+    public boolean hasShield() {
+        return hasShield;
+    }
+
+    public void setHasMoved(boolean status) {
+        this.hasMoved = status;
+    }
+
+    public void setSuperMove(boolean status) {
+        this.superMove = status;
+    }
+
+    public void setShield(boolean status) {
+        this.hasShield = status;
     }
 
     public abstract boolean canMove(int oldRow, int oldCol, int newRow, int newCol, Board board);
 
     public abstract int getScore();
-    
+
     public abstract Piece getCopy();
 }

@@ -1,6 +1,6 @@
 package Piece;
 
-import Main.Board;
+import Main.logic.Board;
 
 public class Pawn extends Piece {
 
@@ -16,8 +16,8 @@ public class Pawn extends Piece {
 
         // 1. กำหนดทิศทาง (Direction)
         // หมากขาวเดินไปทางขวา (+1), หมากดำเดินไปทางซ้าย (-1)
-        int direction = isWhite ? 1 : -1; 
-        
+        int direction = isWhite ? 1 : -1;
+
         Piece target = board.getPiece(newRow, newCol);
 
         // เดินปกติ 1 ช่อง
@@ -25,39 +25,35 @@ public class Pawn extends Piece {
             return target == null;
         }
 
-        // เดิน 2 ช่อง (First Move)
+        // เดิน 2 ช่อง (ครั้งแรก) หรือใช้ไอเทม MOVE+
         if (oldRow == newRow && newCol == oldCol + (2 * direction)) {
-            if (!hasMoved && target == null) {
-                // เช็คช่องตรงกลางว่ามีใครขวางไหม
-                if (board.getPiece(oldRow, oldCol + direction) == null) {
-                    return true;
-                }
+            if (!hasMoved || superMove) {
+                boolean pathClear = board.getPiece(oldRow, oldCol + direction) == null;
+                return target == null && pathClear;
             }
-            return false;
         }
 
-        // กินเฉียง
-        if (Math.abs(newRow - oldRow) == 1 && newCol == oldCol + direction) {
-            // แก้ Bug: ต้องเช็ค target != null ก่อน ไม่งั้นจะเกิด NullPointerException
-            if (target != null && target.isWhite() != this.isWhite) {
-                return true;
-            }
+        // การกินเฉียง
+        if (rowDiff == 1 && newCol == oldCol + direction) {
+            return target != null && target.isWhite() != this.isWhite;
         }
+
+        return false;
 
         // En Passant (ยาก ไว้ทำทีหลัง)
-        
-        return false;
     }
 
     @Override
     public int getScore() {
         return 1;
     }
-    
+
     @Override
     public Piece getCopy() {
         Pawn new_p = new Pawn(this.isWhite, this.row, this.col);
         new_p.setHasMoved(this.hasMoved);
+        new_p.setSuperMove(this.superMove);
         return new_p;
-    };
+    }
+;
 }

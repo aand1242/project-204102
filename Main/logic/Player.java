@@ -1,4 +1,4 @@
-package Main;
+package Main.logic;
 
 public class Player {
     boolean isWhite;

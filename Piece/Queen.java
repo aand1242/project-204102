@@ -1,10 +1,9 @@
 package Piece;
 
-import Main.Board;
+import Main.logic.Board;
 
 public class Queen extends Piece {
-    
-    
+
     public Queen(boolean isWhite, int row, int col) {
         super(isWhite, row, col);
     }
@@ -14,27 +13,29 @@ public class Queen extends Piece {
     public boolean canMove(int oldRow, int oldCol, int newRow, int newCol, Board board) {
         int rowDiff = Math.abs(newRow - oldRow);
         int colDiff = Math.abs(newCol - oldCol);
-        
-        
-        
+
         // เดินปกติ (แนวบวกและแนวทแยง)
         if (rowDiff == colDiff || rowDiff == 0 || colDiff == 0) {
-            if (board.isPathClaer(oldRow, oldCol, newRow, newCol))
+            if (board.isPathClaer(oldRow, oldCol, newRow, newCol)) {
                 return true;
+            }
         }
 
         return false;
     }
 
     @Override
-    public int getScore() { return 9; }
-    
+    public int getScore() {
+        return 9;
+    }
+
     @Override
     public Piece getCopy() {
         Queen new_p = new Queen(this.isWhite, this.row, this.col);
         new_p.setHasMoved(this.hasMoved);
+        new_p.setSuperMove(this.superMove);
         return new_p;
-    };
-
+    }
+;
 
 }
