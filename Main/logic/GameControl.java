@@ -8,10 +8,17 @@ import Piece.Piece;
 import Piece.Queen;
 import Piece.Rook;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import Main.Main;
 import Main.UI.BoardGUI;
 import Main.UI.ItemslotGUI;
+import Main.UI.Revive;
 import Main.UI.Tranfrom;
 
 public class GameControl {
@@ -27,6 +34,9 @@ public class GameControl {
     private ItemslotGUI leftGui;
     private ItemslotGUI rightGui;
 
+    private Revive whiteRevive;
+    private Revive blackRevive;
+
     private int selectedRow;
     private int selectedCol;
 
@@ -37,6 +47,7 @@ public class GameControl {
     private Item item;
 
     private boolean isSniperActive = false;
+    private boolean isReviveActive = false;
     private int sniperTargetRow = -1;
     private int sniperTargetCol = -1;
 
@@ -61,9 +72,14 @@ public class GameControl {
     public void setTranfrom(Tranfrom x) {
         tranfrom = x;
     }
+    public void setReviveUI(Revive w,Revive b){
+        whiteRevive = w;
+        blackRevive = b;
+    }
 
     public void processClick(int r, int c) {
         // ถ้า Rook มีการใช้ item SNIPER
+        
         if (isSniperActive) {
             if (r == sniperTargetRow && c == sniperTargetCol) {
                 Piece targetPiece = board.getPiece(r, c);
@@ -331,25 +347,25 @@ public class GameControl {
 // -------------------- ITEM LOGIC --------------------
 
     public void itemUsed(String item) {
-        if (!item.equals("RECALL") && isPieceSelected) {
+        Player currentPlayer;
+        ItemslotGUI currentGui;
+
+        if (currentTurn) { // White
+            currentPlayer = white;
+            currentGui = leftGui;
+        } else { // Black
+            currentPlayer = black;
+            currentGui = rightGui;
+        }
+
+        int score = currentPlayer.getScore();
+
+            // Item Price
+        int price = 0;
+        if (!item.equals(item) && isPieceSelected) {
 
             Piece p = board.getPiece(selectedRow, selectedCol);
 
-            Player currentPlayer;
-            ItemslotGUI currentGui;
-
-            if (currentTurn) { // White
-                currentPlayer = white;
-                currentGui = leftGui;
-            } else { // Black
-                currentPlayer = black;
-                currentGui = rightGui;
-            }
-
-            int score = currentPlayer.getScore();
-
-            // Item Price
-            int price = 0;
             switch (item) {
                 case "SNIPER":
                     price = 5;

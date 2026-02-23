@@ -15,7 +15,11 @@ public class ItemslotGUI extends JPanel implements ActionListener {
 
     // Item Name
     private String[] itemList = {"RECALL", "SNIPER", "UNICORN", "MOVE+", "SHIELD"};
-
+    private static final ImageIcon[] IconItem = {new ImageIcon("Main\\source_pic\\recall_test.png"),
+                                                new ImageIcon("Main\\source_pic\\sniper.png"),
+                                                new ImageIcon("Main\\source_pic\\unicon.png"),
+                                                new ImageIcon("Main\\source_pic\\pluspng.png"),
+                                                new ImageIcon("Main\\source_pic\\shield.png")};
     private GameControl controller;
 
     public ItemslotGUI(int n, GameControl ctrl) {
@@ -35,6 +39,7 @@ public class ItemslotGUI extends JPanel implements ActionListener {
             itemlist[i].putClientProperty("item", i);
             itemlist[i].putClientProperty("name", itemList[i]);
             itemlist[i].addActionListener(this);
+            itemlist[i].setIcon(IconItem[i]);
 
             gbc.gridy = i + 1;
             gbc.insets = new Insets(0, 0, 8, 0);

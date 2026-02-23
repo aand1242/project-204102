@@ -7,6 +7,12 @@ public class Queen extends Piece {
     public Queen(boolean isWhite, int row, int col) {
         super(isWhite, row, col);
     }
+    public Queen(boolean isWhite) {
+        super(isWhite);
+    }
+    public void setPieceRC(int r,int c){
+        super.setPieceRC(r, c);
+    }
 
     // ตรวจสอบช่องที่เดินได้
     @Override

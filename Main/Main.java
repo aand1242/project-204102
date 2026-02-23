@@ -9,6 +9,7 @@ import javax.swing.*;
 import Main.UI.Background;
 import Main.UI.BoardGUI;
 import Main.UI.ItemslotGUI;
+import Main.UI.Revive;
 import Main.UI.StartUI;
 import Main.UI.Tranfrom;
 import Main.logic.Board;
@@ -76,11 +77,15 @@ public class Main {
         rightslot.setBorder(BorderFactory.createEmptyBorder(0, 44, 0, 0));
         rightslot.setBackground(Color.DARK_GRAY);
 
+        Revive whRevive = new Revive(true);
+        Revive bRevive = new Revive(false);
+        gameLogic.setReviveUI(whRevive, bRevive);
+        
         gameLogic.setItemscore(leftslot, rightslot);
 
         Tranfrom tranfromlayer = new Tranfrom();
         gameLogic.setTranfrom(tranfromlayer);
-        tranfromlayer.setPreferredSize(new Dimension(200, 200));
+        tranfromlayer.setPreferredSize(new Dimension(200, 200)); 
         tranfromlayer.setBounds(220, 80, 200, 200);
 
         Background bg = new Background();

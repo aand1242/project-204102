@@ -11,6 +11,15 @@ public abstract class Piece {
     protected boolean superMove = false; // ใช้ตรวจสอบสถานะการใช้ไอเทม Unicorn (Knight), Move+ (Pawn)
     protected boolean hasShield = false;
 
+    protected Piece(boolean isWhite) {
+        this.isWhite = isWhite;
+    }
+
+    protected void setPieceRC(int r,int c){
+        this.row = r;
+        this.col = c;
+    }
+
     protected Piece(boolean isWhite, int row, int col) {
         this.isWhite = isWhite;
         this.row = row;

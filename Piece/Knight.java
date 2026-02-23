@@ -4,6 +4,12 @@ import Main.logic.Board;
 
 public class Knight extends Piece {
 
+    public Knight(boolean isWhite) {
+        super(isWhite);
+    }
+    public void setPieceRC(int r,int c){
+        super.setPieceRC(r, c);
+    }
     public Knight(boolean isWhite, int row, int col) {
         super(isWhite, row, col);
     }
