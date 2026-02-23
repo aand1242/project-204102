@@ -78,7 +78,9 @@ public class Main {
         rightslot.setBackground(Color.DARK_GRAY);
 
         Revive whRevive = new Revive(true);
+        whRevive.setBounds(220,80,240,160);
         Revive bRevive = new Revive(false);
+        bRevive.setBounds(220,80,240,160);
         gameLogic.setReviveUI(whRevive, bRevive);
         
         gameLogic.setItemscore(leftslot, rightslot);
@@ -104,6 +106,8 @@ public class Main {
 
         layer.add(bg, JLayeredPane.DEFAULT_LAYER);
         layer.add(tranfromlayer, JLayeredPane.MODAL_LAYER);
+        layer.add(bRevive, JLayeredPane.MODAL_LAYER);
+        layer.add(whRevive, JLayeredPane.MODAL_LAYER);
         layer.add(startUI,JLayeredPane.POPUP_LAYER);
 
         screen.add(layer);

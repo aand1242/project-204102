@@ -120,6 +120,7 @@ public class BoardGUI extends JPanel implements ActionListener{
         Color transparentColor = new Color(baseColor.getRed(), baseColor.getGreen(), baseColor.getBlue(), 125);
         
         buttons[r][c].setHighlight(transparentColor);
+        
     }
 
     public void resetColors() {

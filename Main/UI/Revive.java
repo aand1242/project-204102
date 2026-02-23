@@ -8,9 +8,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import Main.logic.GameControl;
+
 
 public class Revive extends JPanel implements ActionListener{
-    private boolean currentTurn
+    private GameControl gct;
+    private boolean currentTurn;
     private final String[] pieceNames = {"Pawn","Rook", "Knight", "Bishop", "Queen","King"};
     private static final ImageIcon[] b_piece = {new ImageIcon("Main\\source_pic\\b_pawn.png"),new ImageIcon("Main\\source_pic\\b_rook.png"), new ImageIcon("Main\\source_pic\\b_knight.png"),
         new ImageIcon("Main\\source_pic\\b_bishop.png"), new ImageIcon("Main\\source_pic\\b_queen.png"),new ImageIcon("Main\\source_pic\\b_king.png")
@@ -18,7 +21,11 @@ public class Revive extends JPanel implements ActionListener{
     private static final ImageIcon[] w_piece = {new ImageIcon("Main\\source_pic\\w_pawn.png"),new ImageIcon("Main\\source_pic\\w_rook.png"),new ImageIcon("Main\\source_pic\\w_knight.png") 
            ,new ImageIcon("Main\\source_pic\\w_bishop.png"),new ImageIcon("Main\\source_pic\\w_king.png"),new ImageIcon("Main\\source_pic\\w_queen.png")
         };
+    public void setGamecontrol(GameControl gct){
+        this.gct = gct;
+    }
     public Revive(boolean isWhite){
+        currentTurn = isWhite;
         this.setLayout(new GridLayout(2, 3));
         JButton[][] button = new JButton[2][3];
         int count = 0;
@@ -37,11 +44,13 @@ public class Revive extends JPanel implements ActionListener{
                 this.add(button[i][j]);
             }
         }
+        setVisible(false);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String thatpiece = e.getActionCommand();
-        
+        gct.setReviePiece(thatpiece, currentTurn);
+        setVisible(false);
     }
 }

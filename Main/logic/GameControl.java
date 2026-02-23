@@ -48,6 +48,7 @@ public class GameControl {
 
     private boolean isSniperActive = false;
     private boolean isReviveActive = false;
+    private Piece revivePiece;
     private int sniperTargetRow = -1;
     private int sniperTargetCol = -1;
 
@@ -78,6 +79,13 @@ public class GameControl {
     }
 
     public void processClick(int r, int c) {
+        if (isReviveActive){
+            board.setPiece(r, c, revivePiece);
+            boardGUI.setPiece(board.getBoard());
+            isReviveActive = false;
+            endTurn(null);
+            return;
+        }
         // ถ้า Rook มีการใช้ item SNIPER
         
         if (isSniperActive) {
@@ -362,7 +370,7 @@ public class GameControl {
 
             // Item Price
         int price = 0;
-        if (!item.equals(item) && isPieceSelected) {
+        if (!item.equals("RECALL") && isPieceSelected) {
 
             Piece p = board.getPiece(selectedRow, selectedCol);
 
@@ -475,12 +483,95 @@ public class GameControl {
                 System.out.println("Cannot use " + item + " with this piece.");
             }
 
-        } else {
+        } else if (item.equals("RECALL")) {
+            price = 10;
+            if (currentTurn){
+                whiteRevive.setVisible(true);
+                whiteRevive.setGamecontrol(this);
+            }else{
+                blackRevive.setVisible(false);
+                blackRevive.setGamecontrol(this);
+            }
+
+        }else{
             //-----DEBUG-----
             if (Main.DEBUG) {
                 System.out.println("Select piece first");
             }
             //---------------
+        }
+    }
+
+    public void setReviePiece(String k,boolean currentTurn){
+        int bw_c = currentTurn ? 0 : 7;
+        if (k.equals("Pawn")){
+            bw_c = bw_c + (currentTurn ? 1 : -1 );
+        }
+
+        switch (k) {
+            case "Rook":
+                if (board.getPiece(0, bw_c) == null || board.getPiece(7, bw_c) == null){
+                    int[] row = {0, 7};
+                    for (int i : row) {
+                        if (board.getPiece(i, bw_c) == null) {
+                            boardGUI.highlightButton(i, bw_c, Color.green);
+                        }
+                    }
+                    revivePiece = new Rook(currentTurn);
+                    isReviveActive = true;
+                }
+                break;
+            case "Pawn":
+                boolean haveSpace =false;
+                for (int i =0 ; i< 7; i++){
+                    if (board.getPiece(i, bw_c) == null){
+                        haveSpace = true;
+                        boardGUI.highlightButton(i, bw_c, Color.green);
+                    }
+                }
+                if (haveSpace){
+                    revivePiece = new Pawn(currentTurn);
+                    isReviveActive = true;
+                }
+                break;
+            case "King":
+                if (board.getPiece(4, bw_c) == null){
+                    boardGUI.highlightButton(5, bw_c, Color.green);
+                    revivePiece = new King(currentTurn);
+                    isReviveActive = true;
+                }
+                break;
+            case "Queen":
+                if (board.getPiece(3, bw_c) == null){
+                    boardGUI.highlightButton(4, bw_c, Color.green);
+                    revivePiece = new Queen(currentTurn);
+                    isReviveActive = true;
+                }
+                break;
+            case "Knight":
+                if (board.getPiece(1, bw_c) == null || board.getPiece(6, bw_c) == null){
+                    int[] row = {1,6};
+                    for (int i : row) {
+                        if (board.getPiece(i, bw_c) == null) {
+                            boardGUI.highlightButton(i, bw_c, Color.green);
+                        }
+                    }
+                    revivePiece = new Knight(currentTurn);
+                    isReviveActive = true;
+                }
+                break;
+            case "Bishop":
+                if (board.getPiece(2, bw_c) == null || board.getPiece(5, bw_c) == null){
+                    int[] row = {2,5};
+                    for (int i : row) {
+                        if (board.getPiece(i, bw_c) == null) {
+                            boardGUI.highlightButton(i, bw_c, Color.green);
+                        }
+                    }
+                    revivePiece = new Bishop(currentTurn);
+                    isReviveActive = true;
+                }
+                break;
         }
     }
 }

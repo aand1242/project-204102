@@ -7,6 +7,12 @@ public class Pawn extends Piece {
     public Pawn(boolean isWhite, int row, int col) {
         super(isWhite, row, col);
     }
+    public Pawn(boolean isWhite) {
+        super(isWhite);
+    }
+    public void setPieceRC(int r,int c){
+        super.setPieceRC(r, c);
+    }
 
     // ตรวจสอบช่องที่เดินได้
     @Override
