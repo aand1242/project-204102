@@ -83,6 +83,13 @@ public class GameControl {
             board.setPiece(r, c, revivePiece);
             boardGUI.setPiece(board.getBoard());
             isReviveActive = false;
+            if(currentTurn){
+                white.addScore(-10);
+                leftGui.changeScore(white.getScore());
+            }else{
+                black.addScore(-10);
+                rightGui.changeScore(black.getScore());
+            }
             endTurn(null);
             return;
         }
@@ -485,12 +492,14 @@ public class GameControl {
 
         } else if (item.equals("RECALL")) {
             price = 10;
-            if (currentTurn){
-                whiteRevive.setVisible(true);
-                whiteRevive.setGamecontrol(this);
-            }else{
-                blackRevive.setVisible(false);
-                blackRevive.setGamecontrol(this);
+            if (score >= price){
+                if (currentTurn){
+                    whiteRevive.setVisible(true);
+                    whiteRevive.setGamecontrol(this);
+                }else{
+                    blackRevive.setVisible(false);
+                    blackRevive.setGamecontrol(this);
+                }
             }
 
         }else{
@@ -523,7 +532,7 @@ public class GameControl {
                 break;
             case "Pawn":
                 boolean haveSpace =false;
-                for (int i =0 ; i< 7; i++){
+                for (int i =0 ; i< 8; i++){
                     if (board.getPiece(i, bw_c) == null){
                         haveSpace = true;
                         boardGUI.highlightButton(i, bw_c, Color.green);
