@@ -7,9 +7,11 @@ public class King extends Piece {
     public King(boolean isWhite) {
         super(isWhite);
     }
-    public void setPieceRC(int r,int c){
+
+    public void setPieceRC(int r, int c) {
         super.setPieceRC(r, c);
     }
+
     public King(boolean isWhite, int row, int col) {
         super(isWhite, row, col);
     }
@@ -27,13 +29,17 @@ public class King extends Piece {
 
         //เข้าป้อม ค่อยทำ งง จะตาย
         if (isWhite) {
-            if ((this.hasMoved() == false && board.getPiece(0, 0) instanceof Rook && board.getPiece(0, 0).hasMoved() == false && rowDiff == 2 && colDiff == 0) || (this.hasMoved() == false && board.getPiece(7, 0).getClass().getSimpleName().equals("Rook") && board.getPiece(7, 0).hasMoved() == false && rowDiff == 2 && colDiff == 0)) {
+            if (board.getPiece(0, 0) != null) {
+                if ((this.hasMoved() == false && board.getPiece(0, 0) instanceof Rook && board.getPiece(0, 0).hasMoved() == false && rowDiff == 2 && colDiff == 0) || (this.hasMoved() == false && board.getPiece(7, 0).getClass().getSimpleName().equals("Rook") && board.getPiece(7, 0).hasMoved() == false && rowDiff == 2 && colDiff == 0)) {
 
-                return true;
+                    return true;
+                }
             }
         } else {
-            if ((this.hasMoved() == false && board.getPiece(0, 7) instanceof Rook && board.getPiece(0, 7).hasMoved() == false && rowDiff == 2 && colDiff == 0) || (this.hasMoved() == false && board.getPiece(7, 7).getClass().getSimpleName().equals("Rook") && board.getPiece(7, 7).hasMoved() == false && rowDiff == 2 && colDiff == 0)) {
-                return true;
+            if (board.getPiece(0, 7) != null) {
+                if ((this.hasMoved() == false && board.getPiece(0, 7) instanceof Rook && board.getPiece(0, 7).hasMoved() == false && rowDiff == 2 && colDiff == 0) || (this.hasMoved() == false && board.getPiece(7, 7).getClass().getSimpleName().equals("Rook") && board.getPiece(7, 7).hasMoved() == false && rowDiff == 2 && colDiff == 0)) {
+                    return true;
+                }
             }
         }
 

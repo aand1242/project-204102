@@ -1,5 +1,10 @@
 package Main.logic;
 
+import Main.Main;
+import Main.UI.BoardGUI;
+import Main.UI.ItemslotGUI;
+import Main.UI.Revive;
+import Main.UI.Tranfrom;
 import Piece.Bishop;
 import Piece.King;
 import Piece.Knight;
@@ -8,18 +13,6 @@ import Piece.Piece;
 import Piece.Queen;
 import Piece.Rook;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
-import Main.Main;
-import Main.UI.BoardGUI;
-import Main.UI.ItemslotGUI;
-import Main.UI.Revive;
-import Main.UI.Tranfrom;
 
 public class GameControl {
 
@@ -44,7 +37,6 @@ public class GameControl {
     private boolean isPieceSelected = false;
 
     private boolean isUseItem = false;
-    private Item item;
 
     private boolean isSniperActive = false;
     private boolean isReviveActive = false;
@@ -73,20 +65,21 @@ public class GameControl {
     public void setTranfrom(Tranfrom x) {
         tranfrom = x;
     }
-    public void setReviveUI(Revive w,Revive b){
+
+    public void setReviveUI(Revive w, Revive b) {
         whiteRevive = w;
         blackRevive = b;
     }
 
     public void processClick(int r, int c) {
-        if (isReviveActive){
+        if (isReviveActive) {
             board.setPiece(r, c, revivePiece);
-            boardGUI.setPiece(board.getBoard());
+            boardGUI.setPieceGUI(board.getBoard());
             isReviveActive = false;
-            if(currentTurn){
+            if (currentTurn) {
                 white.addScore(-10);
                 leftGui.changeScore(white.getScore());
-            }else{
+            } else {
                 black.addScore(-10);
                 rightGui.changeScore(black.getScore());
             }
@@ -94,7 +87,7 @@ public class GameControl {
             return;
         }
         // ถ้า Rook มีการใช้ item SNIPER
-        
+
         if (isSniperActive) {
             if (r == sniperTargetRow && c == sniperTargetCol) {
                 Piece targetPiece = board.getPiece(r, c);
@@ -351,7 +344,7 @@ public class GameControl {
         isPieceSelected = false;
         currentTurn = !currentTurn;
         boardGUI.resetColors();
-        boardGUI.setPiece(board.getBoard());
+        boardGUI.setPieceGUI(board.getBoard());
         // ... อัปเดตคะแนน ...
     }
 //
@@ -375,7 +368,7 @@ public class GameControl {
 
         int score = currentPlayer.getScore();
 
-            // Item Price
+        // Item Price
         int price = 0;
         if (!item.equals("RECALL") && isPieceSelected) {
 
@@ -492,17 +485,17 @@ public class GameControl {
 
         } else if (item.equals("RECALL")) {
             price = 10;
-            if (score >= price){
-                if (currentTurn){
+            if (score >= price) {
+                if (currentTurn) {
                     whiteRevive.setVisible(true);
                     whiteRevive.setGamecontrol(this);
-                }else{
+                } else {
                     blackRevive.setVisible(false);
                     blackRevive.setGamecontrol(this);
                 }
             }
 
-        }else{
+        } else {
             //-----DEBUG-----
             if (Main.DEBUG) {
                 System.out.println("Select piece first");
@@ -511,15 +504,15 @@ public class GameControl {
         }
     }
 
-    public void setReviePiece(String k,boolean currentTurn){
+    public void setReviePiece(String k, boolean currentTurn) {
         int bw_c = currentTurn ? 0 : 7;
-        if (k.equals("Pawn")){
-            bw_c = bw_c + (currentTurn ? 1 : -1 );
+        if (k.equals("Pawn")) {
+            bw_c = bw_c + (currentTurn ? 1 : -1);
         }
 
         switch (k) {
             case "Rook":
-                if (board.getPiece(0, bw_c) == null || board.getPiece(7, bw_c) == null){
+                if (board.getPiece(0, bw_c) == null || board.getPiece(7, bw_c) == null) {
                     int[] row = {0, 7};
                     for (int i : row) {
                         if (board.getPiece(i, bw_c) == null) {
@@ -531,35 +524,35 @@ public class GameControl {
                 }
                 break;
             case "Pawn":
-                boolean haveSpace =false;
-                for (int i =0 ; i< 8; i++){
-                    if (board.getPiece(i, bw_c) == null){
+                boolean haveSpace = false;
+                for (int i = 0; i < 8; i++) {
+                    if (board.getPiece(i, bw_c) == null) {
                         haveSpace = true;
                         boardGUI.highlightButton(i, bw_c, Color.green);
                     }
                 }
-                if (haveSpace){
+                if (haveSpace) {
                     revivePiece = new Pawn(currentTurn);
                     isReviveActive = true;
                 }
                 break;
             case "King":
-                if (board.getPiece(4, bw_c) == null){
+                if (board.getPiece(4, bw_c) == null) {
                     boardGUI.highlightButton(5, bw_c, Color.green);
                     revivePiece = new King(currentTurn);
                     isReviveActive = true;
                 }
                 break;
             case "Queen":
-                if (board.getPiece(3, bw_c) == null){
+                if (board.getPiece(3, bw_c) == null) {
                     boardGUI.highlightButton(4, bw_c, Color.green);
                     revivePiece = new Queen(currentTurn);
                     isReviveActive = true;
                 }
                 break;
             case "Knight":
-                if (board.getPiece(1, bw_c) == null || board.getPiece(6, bw_c) == null){
-                    int[] row = {1,6};
+                if (board.getPiece(1, bw_c) == null || board.getPiece(6, bw_c) == null) {
+                    int[] row = {1, 6};
                     for (int i : row) {
                         if (board.getPiece(i, bw_c) == null) {
                             boardGUI.highlightButton(i, bw_c, Color.green);
@@ -570,8 +563,8 @@ public class GameControl {
                 }
                 break;
             case "Bishop":
-                if (board.getPiece(2, bw_c) == null || board.getPiece(5, bw_c) == null){
-                    int[] row = {2,5};
+                if (board.getPiece(2, bw_c) == null || board.getPiece(5, bw_c) == null) {
+                    int[] row = {2, 5};
                     for (int i : row) {
                         if (board.getPiece(i, bw_c) == null) {
                             boardGUI.highlightButton(i, bw_c, Color.green);
