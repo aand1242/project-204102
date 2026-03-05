@@ -38,7 +38,7 @@ public class BoardGUI extends JPanel implements ActionListener {
         // JButton[][] buttons = new JButton[8][8];//สร้างปุ่มไว้
         ActionListener addclick = this;
 
-        Color Dark = new Color(97, 86, 129);
+        Color Dark = new Color(49, 43, 76);
         Color Light = new Color(238, 226, 223);
 
         for (int row = 0; row < 8; row++) {
@@ -47,6 +47,7 @@ public class BoardGUI extends JPanel implements ActionListener {
                 buttons[row][col].addActionListener(addclick);
                 buttons[row][col].putClientProperty("row", row);
                 buttons[row][col].putClientProperty("col", col);
+                buttons[row][col].setBorderPainted(false);
                 // 2. ปรับแต่งปุ่ม (เช่น ใส่สีสลับขาว-ดำ)
                 if ((row + col) % 2 == 0) {
                     buttons[row][col].setBackground(Dark);

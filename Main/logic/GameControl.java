@@ -14,7 +14,11 @@ import Piece.Queen;
 import Piece.Rook;
 import java.awt.*;
 
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 public class GameControl {
+    private JPanel WLscreen;
 
     private Tranfrom tranfrom;
 
@@ -69,6 +73,10 @@ public class GameControl {
     public void setReviveUI(Revive w, Revive b) {
         whiteRevive = w;
         blackRevive = b;
+    }
+    public void setWLscreen(JPanel screen){
+        WLscreen = screen;
+        WLscreen.setLayout(null);
     }
 
     public void processClick(int r, int c) {
@@ -334,18 +342,136 @@ public class GameControl {
             score += targetPiece.getScore();
         }
 
-        if (currentTurn == true) {
+        if (currentTurn == true) { // White just moved
             white.addScore(score);
             leftGui.changeScore(white.getScore());
-        } else {
+        } else {                   // Black just moved
             black.addScore(score);
             rightGui.changeScore(black.getScore());
         }
+
         isPieceSelected = false;
+
+        // สลับเทิร์นไปยังผู้เล่นคนถัดไป
         currentTurn = !currentTurn;
+
         boardGUI.resetColors();
         boardGUI.setPieceGUI(board.getBoard());
-        // ... อัปเดตคะแนน ...
+
+        // ----------------------------------------------------
+        // ส่วนที่เพิ่มใหม่: ตรวจสอบสถานะเกม (Checkmate / Stalemate)
+        // ----------------------------------------------------
+        boolean hasMoves = hasLegalMoves(currentTurn);
+        boolean inCheck = isKingInCheck(currentTurn);
+
+        System.out.println("hasLegalMove" + hasMoves);
+        if (!hasMoves) {
+            if (inCheck) {
+                // รุกฆาต (Checkmate)
+                WLscreen.setVisible(true);
+                JLabel text = new JLabel();
+                text.setBounds(256,240,800,200);
+                String winner = currentTurn ? "Black" : "White";
+                text.setText(winner + " WIN !");
+                text.setFont(new Font("Jacquard 24", Font.PLAIN, 125));
+                WLscreen.add(text);
+                System.out.println("CHECKMATE! " + winner + " wins!");
+                // TODO: คุณสามารถเรียกหน้าต่าง GUI แสดงผู้ชนะที่นี่
+            } else {
+                WLscreen.setVisible(true);
+                JLabel text = new JLabel();
+                text.setBounds(256,240,800,200);
+                text.setText("Draw !");
+                text.setFont(new Font("Jacquard 24", Font.PLAIN, 125));
+                WLscreen.add(text);
+                // เสมอ (Stalemate)
+                System.out.println("STALEMATE! It's a draw!");
+                // TODO: คุณสามารถเรียกหน้าต่าง GUI แสดงผลเสมอที่นี่
+            }
+        } else if (inCheck) {
+            // โดนรุกอยู่ แต่ยังหนีได้ (Check)
+            for (int i =0 ; i < 8;i++){
+                for(int j = 0 ; j<8 ;j++){
+                    if (board.getPiece(i, j)instanceof King && board.getPiece(i,j).isWhite() == currentTurn){
+                        // System.out.print(i + " "+j);
+                        boardGUI.highlightButton(i,j,Color.RED);
+                    }
+                }
+            }
+            System.out.println("CHECK!");
+            // TODO: อาจจะเปลี่ยนสี BoardGUI ให้รู้ว่าโดนรุกอยู่
+        }
+        // ----------------------------------------------------
+    }
+
+    // ตรวจสอบว่า King ของสีที่กำหนดกำลังถูกรุก (In Check) หรือไม่
+    public boolean isKingInCheck(boolean isWhiteColor) {
+        int kingRow = -1, kingCol = -1;
+
+        // 1. หาตำแหน่ง King ของเราบนกระดานปัจจุบัน
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                Piece p = board.getPiece(r, c);
+                if (p != null && p instanceof King && p.isWhite() == isWhiteColor) {
+                    kingRow = r;
+                    kingCol = c;
+                    break;
+                }
+            }
+        }
+
+        // หากหา King ไม่เจอ (ไม่ควรเกิดขึ้นในเกมปกติ) ให้ถือว่าไม่โดนรุก
+        if (kingRow == -1) {
+            return false;
+        }
+
+        // 2. ตรวจสอบว่ามีหมากศัตรูตัวไหนเดินมาทับตำแหน่ง King ของเราได้ไหม
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                Piece enemy = board.getPiece(r, c);
+                // ถ้าเป็นหมากศัตรู และศัตรูสามารถเดินมากิน King ได้
+                if (enemy != null && enemy.isWhite() != isWhiteColor) {
+                    if (enemy.canMove(r, c, kingRow, kingCol, board)) {
+                        return true; // โดนรุกอยู่
+                    }
+                }
+            }
+        }
+        return false; // ปลอดภัย
+    }
+
+    // ตรวจสอบว่าผู้เล่นสีที่กำหนด มีตาเดินที่ถูกต้องและปลอดภัยเหลืออยู่หรือไม่
+    public boolean hasLegalMoves(boolean isWhiteColor) {
+        // วนลูปหาหมากทุกตัวของเราบนกระดาน
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                Piece p = board.getPiece(r, c);
+
+                // ถ้าเจอหมากของเรา
+                if (p != null && p.isWhite() == isWhiteColor) {
+
+                    // ลองจำลองเดินไปทุกๆ ช่องบนกระดาน (8x8)
+                    for (int targetR = 0; targetR < 8; targetR++) {
+                        for (int targetC = 0; targetC < 8; targetC++) {
+
+                            // --------------------------------------------------
+                            // จุดที่ต้องเพิ่ม: ข้ามช่องที่เป็นหมากฝ่ายเดียวกัน
+                            // --------------------------------------------------
+                            Piece targetSquare = board.getPiece(targetR, targetC);
+                            if (targetSquare != null && targetSquare.isWhite() == isWhiteColor) {
+                                continue; // ข้ามการจำลองตานี้ไปเลย เพราะกินพวกเดียวกันไม่ได้
+                            }
+
+                            // ถ้าหมากสามารถเดินตามกฎได้ (canMove) และ เดินไปแล้ว King ไม่ตาย (isMoveSafe)
+                            if (p.canMove(r, c, targetR, targetC, board) && isMoveSafe(r, c, targetR, targetC)) {
+                                return true; // แปลว่ายังมีอย่างน้อย 1 ตาเดินที่เล่นได้
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false; // หมดตาเดิน (Checkmate หรือ Stalemate)
     }
 //
 //

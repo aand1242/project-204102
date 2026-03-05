@@ -14,11 +14,11 @@ public class ItemslotGUI extends JPanel implements ActionListener {
 
     // Item Name
     private String[] itemList = {"RECALL", "SNIPER", "UNICORN", "MOVE+", "SHIELD"};
-    private final ImageIcon[] IconItem = {getScaledIcon("Main\\source_pic\\recall_test.png"),
-        getScaledIcon("Main\\source_pic\\sniper.png"),
-        getScaledIcon("Main\\source_pic\\unicon.png"),
-        getScaledIcon("Main\\source_pic\\pluspng.png"),
-        getScaledIcon("Main\\source_pic\\shield.png")};
+    private final ImageIcon[] IconItem = {getScaledIcon("Main\\source_pic\\Recall_icon.png"),
+        getScaledIcon("Main\\source_pic\\Sniper_icon.png"),
+        getScaledIcon("Main\\source_pic\\Unicorn_icon.png"),
+        getScaledIcon("Main\\source_pic\\Moveplus_icon.png"),
+        getScaledIcon("Main\\source_pic\\Shield_icon.png")};
     private GameControl controller;
 
     public ItemslotGUI(int n, GameControl ctrl) {
@@ -26,20 +26,24 @@ public class ItemslotGUI extends JPanel implements ActionListener {
         GridBagConstraints gbc = new GridBagConstraints();
         scoreLabel = new JLabel(Integer.toString(n));
         scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        scoreLabel.setPreferredSize(new Dimension(40 * 2, 20 * 2));
-        scoreLabel.setFont(new Font("Arial", Font.BOLD, 20 * 2));
+        scoreLabel.setPreferredSize(new Dimension(50 * 2, 50 * 2));
+        scoreLabel.setForeground(Color.WHITE);
+        scoreLabel.setFont(new Font("Jacquard 24", Font.PLAIN, 50 * 2));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(0, 0, 12 * 2, 0);
         add(scoreLabel, gbc);
         for (int i = 0; i < 5; i++) {
-            itemlist[i] = new JButton();
+            itemlist[i] = new JButton(IconItem[i]);
             itemlist[i].setPreferredSize(new Dimension(48 * 2, 48 * 2));
             itemlist[i].putClientProperty("item", i);
             itemlist[i].putClientProperty("name", itemList[i]);
             itemlist[i].addActionListener(this);
-            itemlist[i].setIcon(IconItem[i]);
+            itemlist[i].setOpaque(false);
+            itemlist[i].setContentAreaFilled(false);
+            itemlist[i].setBorderPainted(false);
+            //itemlist[i].setIcon(IconItem[i]);
 
             gbc.gridy = i + 1;
             gbc.insets = new Insets(0, 0, 8 * 2, 0);

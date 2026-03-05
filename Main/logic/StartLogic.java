@@ -15,6 +15,7 @@ public class StartLogic {
     public void operationButton(String cmd){
         if (cmd.equals("start")){
             startui.setVisible(false);
+            
         }else {
             ruleui.setVisible(true);
         }

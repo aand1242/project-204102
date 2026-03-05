@@ -27,7 +27,7 @@ public class Background extends JPanel {
     @Override
     public Dimension getPreferredSize() {
         // คืนค่าขนาดที่ต้องการ เพื่อให้ screen.pack() ปรับขนาดหน้าต่างตามนี้
-        return new Dimension(640*2, 360*2);
+        return new Dimension(640 * 2, 360 * 2);
     }
 
     @Override

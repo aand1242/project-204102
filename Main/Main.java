@@ -75,7 +75,7 @@ public class Main {
         leftslot.setBackground(Color.DARK_GRAY);
         ItemslotGUI rightslot = new ItemslotGUI(black.getScore(), gameLogic);
         rightslot.setPreferredSize(new Dimension(156 * 2, 360 * 2));
-        rightslot.setBorder(BorderFactory.createEmptyBorder(0, 44 * 2, 0, 0));
+        rightslot.setBorder(BorderFactory.createEmptyBorder(0, 22 * 2, 0, 0));
         rightslot.setBackground(Color.DARK_GRAY);
 
         Revive whRevive = new Revive(true);
@@ -104,16 +104,25 @@ public class Main {
         RuleUI ruleui = new RuleUI();
         startUI.setStartLogic(stg);
         startUI.setBounds(0, 0, finalWidth, finalHeight);
-        ruleui.setBounds(136,77,1008,567);
+        ruleui.setBounds(136, 77, 1008, 567);
         stg.setStartUI(startUI);
         stg.setRuleUI(ruleui);
 
+
+        JPanel result_win = new JPanel();
+        result_win.setBounds(0,0,1280,720);
+        result_win.setVisible(false);
+        gameLogic.setWLscreen(result_win);
+
+        layer.add(result_win,JLayeredPane.POPUP_LAYER);
         layer.add(bg, JLayeredPane.DEFAULT_LAYER);
         layer.add(tranfromlayer, JLayeredPane.MODAL_LAYER);
         layer.add(bRevive, JLayeredPane.MODAL_LAYER);
         layer.add(whRevive, JLayeredPane.MODAL_LAYER);
         layer.add(startUI, JLayeredPane.POPUP_LAYER);
-        layer.add(ruleui,Integer.valueOf(301));
+        layer.add(ruleui, Integer.valueOf(301));
+
+
 
         screen.add(layer);
         screen.pack();

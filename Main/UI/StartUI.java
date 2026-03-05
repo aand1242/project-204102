@@ -32,8 +32,8 @@ public class StartUI extends JPanel implements ActionListener {
         start_b.setActionCommand("start");
         start_b.setBounds(264 * 2, 200 * 2, 112 * 2, 48 * 2);
         start_b.addActionListener(this);
-        start_b.setText("START");
-        start_b.setFont(new Font("Arial", Font.BOLD, 20 * 2));
+        start_b.setText("Start");
+        start_b.setFont(new Font("Jacquard 24", Font.PLAIN, 40 * 2));
 
         JButton rule_b = new JButton();
         rule_b.setActionCommand("rule");
