@@ -23,6 +23,7 @@ public class Main {
     public static final int width = 640;
     public static final int height = 360;
 
+
     public static void main(String[] args) {
         int finalWidth = width * SCALE;
         int finalHeight = height * SCALE;
@@ -105,9 +106,10 @@ public class Main {
         startUI.setStartLogic(stg);
         startUI.setBounds(0, 0, finalWidth, finalHeight);
         ruleui.setBounds(136, 77, 1008, 567);
+        gameLogic.setStartUI(startUI);
         stg.setStartUI(startUI);
         stg.setRuleUI(ruleui);
-
+        stg.setGamecontrol(gameLogic);
 
         JPanel result_win = new JPanel();
         result_win.setBounds(0,0,1280,720);

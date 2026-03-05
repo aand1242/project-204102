@@ -14,9 +14,21 @@ public class Board {
 
     public Board() {
         board = new Piece[8][8];
-        setupBoard();   
+        setupBoard(); 
     }
-
+    public void resetBoard(){
+        clearBoard();
+        setupBoard();
+    }
+    private void clearBoard(){
+        for(int i= 0;i < 8 ;i++){
+            for (int j = 0; j < 8;j++){
+                if (board[i][j] != null){
+                    board[i][j] = null;
+                }
+            }
+        }
+    }
     // วางหมากเริ่มต้น
     private void setupBoard() {
         // วางหมากขาว

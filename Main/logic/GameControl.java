@@ -4,6 +4,7 @@ import Main.Main;
 import Main.UI.BoardGUI;
 import Main.UI.ItemslotGUI;
 import Main.UI.Revive;
+import Main.UI.StartUI;
 import Main.UI.Tranfrom;
 import Piece.Bishop;
 import Piece.King;
@@ -13,11 +14,16 @@ import Piece.Piece;
 import Piece.Queen;
 import Piece.Rook;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class GameControl {
+public class GameControl{
+    private JLabel text = new JLabel();
+    private StartUI startUI;
     private JPanel WLscreen;
 
     private Tranfrom tranfrom;
@@ -77,6 +83,9 @@ public class GameControl {
     public void setWLscreen(JPanel screen){
         WLscreen = screen;
         WLscreen.setLayout(null);
+    }
+    public void setStartUI(StartUI startUI){
+        this.startUI = startUI;
     }
 
     public void processClick(int r, int c) {
@@ -369,7 +378,6 @@ public class GameControl {
             if (inCheck) {
                 // รุกฆาต (Checkmate)
                 WLscreen.setVisible(true);
-                JLabel text = new JLabel();
                 text.setBounds(256,240,800,200);
                 String winner = currentTurn ? "Black" : "White";
                 text.setText(winner + " WIN !");
@@ -379,7 +387,6 @@ public class GameControl {
                 // TODO: คุณสามารถเรียกหน้าต่าง GUI แสดงผู้ชนะที่นี่
             } else {
                 WLscreen.setVisible(true);
-                JLabel text = new JLabel();
                 text.setBounds(256,240,800,200);
                 text.setText("Draw !");
                 text.setFont(new Font("Jacquard 24", Font.PLAIN, 125));
@@ -388,6 +395,17 @@ public class GameControl {
                 System.out.println("STALEMATE! It's a draw!");
                 // TODO: คุณสามารถเรียกหน้าต่าง GUI แสดงผลเสมอที่นี่
             }
+            JButton homeButton = new JButton();
+            homeButton.setBounds(604,450,72,72);
+            WLscreen.add(homeButton);
+            homeButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    WLscreen.remove(text);
+                    WLscreen.setVisible(false);
+                    startUI.setVisible(true);
+                }
+            });
         } else if (inCheck) {
             // โดนรุกอยู่ แต่ยังหนีได้ (Check)
             for (int i =0 ; i < 8;i++){
@@ -701,5 +719,13 @@ public class GameControl {
                 }
                 break;
         }
+    }
+    public void resetGame(){
+        board.resetBoard();
+        boardGUI.setPieceGUI(board.getBoard());
+        white.resetScore();
+        leftGui.changeScore(white.getScore());
+        black.resetScore();
+        rightGui.changeScore(black.getScore());
     }
 }
