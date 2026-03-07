@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -32,13 +33,21 @@ public class StartUI extends JPanel implements ActionListener {
         start_b.setActionCommand("start");
         start_b.setBounds(264 * 2, 200 * 2, 112 * 2, 48 * 2);
         start_b.addActionListener(this);
-        start_b.setText("Start");
-        start_b.setFont(new Font("Jacquard 24", Font.PLAIN, 40 * 2));
+        start_b.setIcon(getScaledIcon("Main\\source_pic\\start_button.png"));
+        start_b.setContentAreaFilled(false);
+        start_b.setFocusPainted(false);
+        start_b.setOpaque(false);
+        start_b.setBorderPainted(false);
 
         JButton rule_b = new JButton();
         rule_b.setActionCommand("rule");
         rule_b.setBounds(264 * 2, 260 * 2, 112 * 2, 48 * 2);
         rule_b.addActionListener(this);
+        rule_b.setIcon(getScaledIcon("Main\\source_pic\\rules_button.png"));
+        rule_b.setContentAreaFilled(false);
+        rule_b.setFocusPainted(false);
+        rule_b.setOpaque(false);
+        rule_b.setBorderPainted(false);
         setVisible(true);
         add(start_b);
         add(rule_b);
@@ -76,5 +85,14 @@ public class StartUI extends JPanel implements ActionListener {
         String click_b = e.getActionCommand();
         stg.operationButton(click_b);
     }
+    private ImageIcon getScaledIcon(String path) {
+        ImageIcon originalIcon = new ImageIcon(path);
 
+        Image scaledImage = originalIcon.getImage().getScaledInstance(
+                originalIcon.getIconWidth() * 2,
+                originalIcon.getIconHeight() * 2,
+                Image.SCALE_REPLICATE
+        );
+        return new ImageIcon(scaledImage);
+    }
 }

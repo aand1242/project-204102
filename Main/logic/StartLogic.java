@@ -20,9 +20,10 @@ public class StartLogic {
         if (cmd.equals("start")){
             startui.setVisible(false);
             gameControl.resetGame();
-            // System.out.print("reset");
+            System.out.print("reset");
         }else {
             ruleui.setVisible(true);
+            
         }
     }
 }

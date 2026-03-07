@@ -50,7 +50,7 @@ public class Main {
 
         middle.add(boardUI);
 
-        JPanel midslot = new JPanel();
+        JLabel midslot = new JLabel(getScaledIcon("Main\\source_pic\\BoardFrame.png"));
         midslot.setPreferredSize(new Dimension(328 * 2, 360 * 2));
         midslot.setOpaque(false);
         midslot.setLayout(new GridBagLayout());
@@ -105,7 +105,7 @@ public class Main {
         RuleUI ruleui = new RuleUI();
         startUI.setStartLogic(stg);
         startUI.setBounds(0, 0, finalWidth, finalHeight);
-        ruleui.setBounds(136, 77, 1008, 567);
+        ruleui.setBounds(136, 77, 1008, 570);
         gameLogic.setStartUI(startUI);
         stg.setStartUI(startUI);
         stg.setRuleUI(ruleui);
@@ -132,5 +132,15 @@ public class Main {
         screen.setResizable(false);
         screen.setVisible(true);
 
+    }
+    private static ImageIcon getScaledIcon(String path) {
+        ImageIcon originalIcon = new ImageIcon(path);
+
+        Image scaledImage = originalIcon.getImage().getScaledInstance(
+                originalIcon.getIconWidth() * 2,
+                originalIcon.getIconHeight() * 2,
+                Image.SCALE_REPLICATE
+        );
+        return new ImageIcon(scaledImage);
     }
 }
