@@ -26,7 +26,7 @@ public class ItemslotGUI extends JPanel implements ActionListener {
         GridBagConstraints gbc = new GridBagConstraints();
         scoreLabel = new JLabel(Integer.toString(n));
         scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        scoreLabel.setPreferredSize(new Dimension(50 * 2, 50 * 2));
+        scoreLabel.setPreferredSize(new Dimension(75 * 2, 50 * 2));
         scoreLabel.setForeground(Color.WHITE);
         scoreLabel.setFont(new Font("Jacquard 24", Font.PLAIN, 50 * 2));
         gbc.gridx = 0;

@@ -12,6 +12,11 @@ import Main.logic.GameControl;
 import Main.logic.Player;
 import Main.logic.StartLogic;
 import java.awt.*;
+import java.io.File;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 
 public class Main {
@@ -30,6 +35,7 @@ public class Main {
 
         // screen create
         JFrame screen = new JFrame();
+        playMusic("Main\\source_pic\\SoundBG.wav");
         //screen.setSize(width, height);
         JLayeredPane layer = new JLayeredPane();
         layer.setPreferredSize(new Dimension(finalWidth, finalHeight));
@@ -76,7 +82,7 @@ public class Main {
         leftslot.setBackground(Color.DARK_GRAY);
         ItemslotGUI rightslot = new ItemslotGUI(black.getScore(), gameLogic);
         rightslot.setPreferredSize(new Dimension(156 * 2, 360 * 2));
-        rightslot.setBorder(BorderFactory.createEmptyBorder(0, 22 * 2, 0, 0));
+        rightslot.setBorder(BorderFactory.createEmptyBorder(0, 44 * 2, 0, 0));
         rightslot.setBackground(Color.DARK_GRAY);
 
         Revive whRevive = new Revive(true);
@@ -105,7 +111,8 @@ public class Main {
         RuleUI ruleui = new RuleUI();
         startUI.setStartLogic(stg);
         startUI.setBounds(0, 0, finalWidth, finalHeight);
-        ruleui.setBounds(136, 77, 1008, 570);
+        ruleui.setBounds(0,0, 1280, 720);
+        
         gameLogic.setStartUI(startUI);
         stg.setStartUI(startUI);
         stg.setRuleUI(ruleui);
@@ -142,5 +149,25 @@ public class Main {
                 Image.SCALE_REPLICATE
         );
         return new ImageIcon(scaledImage);
+    }
+    public static void playMusic(String filePath) {
+        try {
+            File musicPath = new File(filePath);
+            
+            if (musicPath.exists()) {
+                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInput);
+                clip.start(); // เริ่มเล่นเพลง
+                
+                // หากต้องการให้เล่นวนซ้ำ (Optional)
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+                
+            } else {
+                System.out.println("หาไฟล์ไม่เจอครับ ลองเช็คชื่อไฟล์อีกทีนะ");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

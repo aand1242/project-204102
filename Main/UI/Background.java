@@ -18,7 +18,7 @@ public class Background extends JPanel {
     public Background() {
         setLayout(new GridBagLayout()); // เพื่อให้บอร์ดมาวางตรงกลางได้
         try {
-            img = ImageIO.read(new File("Main\\source_pic\\main background.png"));
+            img = ImageIO.read(new File("Main\\source_pic\\bg + effect.png"));
         } catch (Exception e) {
             System.out.println("I cant see the image");
         }

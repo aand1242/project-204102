@@ -94,10 +94,10 @@ public class GameControl{
             boardGUI.setPieceGUI(board.getBoard());
             isReviveActive = false;
             if (currentTurn) {
-                white.addScore(-10);
+                white.addScore(-25);
                 leftGui.changeScore(white.getScore());
             } else {
-                black.addScore(-10);
+                black.addScore(-25);
                 rightGui.changeScore(black.getScore());
             }
             endTurn(null);
@@ -520,16 +520,16 @@ public class GameControl{
 
             switch (item) {
                 case "SNIPER":
-                    price = 5;
+                    price = 15;
                     break;
                 case "UNICORN":
-                    price = 4;
+                    price = 10;
                     break;
                 case "MOVE+":
-                    price = 2;
+                    price = 8;
                     break;
                 case "SHIELD":
-                    price = 3;
+                    price = 5;
                     break;
             }
 
@@ -628,13 +628,13 @@ public class GameControl{
             }
 
         } else if (item.equals("RECALL")) {
-            price = 10;
+            price = 25;
             if (score >= price) {
                 if (currentTurn) {
                     whiteRevive.setVisible(true);
                     whiteRevive.setGamecontrol(this);
                 } else {
-                    blackRevive.setVisible(false);
+                    blackRevive.setVisible(true);
                     blackRevive.setGamecontrol(this);
                 }
             }
@@ -727,5 +727,7 @@ public class GameControl{
         leftGui.changeScore(white.getScore());
         black.resetScore();
         rightGui.changeScore(black.getScore());
+        currentTurn = true;
     }
 }
+

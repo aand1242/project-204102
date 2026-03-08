@@ -18,20 +18,21 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class StartUI extends JPanel implements ActionListener {
-
+    private JButton start_b = new JButton();
+    private JButton rule_b = new JButton();
     private Image img;
     private StartLogic stg;
 
     public StartUI() {
         setLayout(null);
         try {
-            img = ImageIO.read(new File("Main\\source_pic\\main background.png"));
+            img = ImageIO.read(new File("Main\\source_pic\\StartBG.png"));
         } catch (Exception e) {
             System.out.println("I cant see the image");
         }
         JButton start_b = new JButton();
         start_b.setActionCommand("start");
-        start_b.setBounds(264 * 2, 200 * 2, 112 * 2, 48 * 2);
+        start_b.setBounds(264 * 2, 200 * 2, 112 * 2, 40 * 2);
         start_b.addActionListener(this);
         start_b.setIcon(getScaledIcon("Main\\source_pic\\start_button.png"));
         start_b.setContentAreaFilled(false);
@@ -41,7 +42,7 @@ public class StartUI extends JPanel implements ActionListener {
 
         JButton rule_b = new JButton();
         rule_b.setActionCommand("rule");
-        rule_b.setBounds(264 * 2, 260 * 2, 112 * 2, 48 * 2);
+        rule_b.setBounds(264 * 2, 260 * 2, 112 * 2, 40 * 2);
         rule_b.addActionListener(this);
         rule_b.setIcon(getScaledIcon("Main\\source_pic\\rules_button.png"));
         rule_b.setContentAreaFilled(false);

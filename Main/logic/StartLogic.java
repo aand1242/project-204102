@@ -23,7 +23,6 @@ public class StartLogic {
             System.out.print("reset");
         }else {
             ruleui.setVisible(true);
-            
         }
     }
 }

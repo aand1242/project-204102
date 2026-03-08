@@ -16,10 +16,10 @@ import javax.swing.JPanel;
 
 
 public class RuleUI extends JPanel implements ActionListener {
-    
+    private StartUI startUI;
     private JLabel cards ;
     private JLabel text = new JLabel();
-    private JLabel frame = new JLabel(getScaledIcon("Main\\source_pic\\TextFrame.png"));
+    private JLabel frame = new JLabel();
     private int count;
     private String [] wold = {"bank", "pon", "mint", "pern", "gam"};
     private ImageIcon [] card_BK = {getScaledIcon("Main\\source_pic\\Recall_card.png"), 
@@ -29,9 +29,17 @@ public class RuleUI extends JPanel implements ActionListener {
     getScaledIcon("Main\\source_pic\\Shield_card.png"),
     };
 
+    public void setStartUI(StartUI a){
+        startUI = a;
+    }
     public RuleUI(){
-        setLayout(null);
-        this.setBackground(Color.lightGray);
+        JLabel bg = new JLabel(getScaledIcon("Main\\source_pic\\bg.png"));
+        bg.setBounds(0,0,1280,720);
+
+        JPanel someLabel = new JPanel();
+        someLabel.setLayout(null);
+        someLabel.setBounds(136, 77, 1008, 570);
+        someLabel.setOpaque(false);
 
         JButton close = new JButton();
         close.addActionListener(this);
@@ -41,9 +49,8 @@ public class RuleUI extends JPanel implements ActionListener {
         close.setFont(new Font("Jacquard 24", Font.PLAIN, 24));
         close.setBackground(Color.RED);
         close.setBounds(968,0,40,40);
-        add(close);
-        setVisible(false);
-
+        someLabel.add(close);
+        
         JButton Next = new JButton();
         Next.addActionListener(this);
         Next.setActionCommand("nextp");
@@ -52,8 +59,8 @@ public class RuleUI extends JPanel implements ActionListener {
         Next.setText(">");
         Next.setBackground(Color.blue);
         Next.setBounds(972, 267, 36, 36);
-        add(Next);
-
+        someLabel.add(Next);
+        
         
         JButton Back = new JButton();
         Back.addActionListener(this);
@@ -63,32 +70,26 @@ public class RuleUI extends JPanel implements ActionListener {
         Back.setText("<");
         Back.setBackground(Color.blue);
         Back.setBounds(0, 267, 36, 36);
-        add(Back);
-
+        someLabel.add(Back);
+        
         cards = new JLabel(card_BK[count]);
         cards.setBounds(140, 93, 128*2, 192*2);
-        add(cards);
-
-        // text.setBackground(null);
+        someLabel.add(cards);
+        
+        
+        
         // text.setOpaque(false);
-        // text.setBounds(250, 93, 244*2, 176*2);
-        // text.setEnabled(false);
-        // text.setContentAreaFilled(false);
-        // text.setBorderPainted(false);
+        // text.setBounds(280 * 2, 110 * 2, 112 * 2, 48 * 2);
+        // text.setText(wold[count]);
+        // text.setFont(new Font("Jacquard 24", Font.PLAIN, 16 * 2));
         // add(text);
-
-        text.setBackground(null);
-        text.setOpaque(false);
-        // text.setActionCommand("start");
-        text.setBounds(280 * 2, 110 * 2, 112 * 2, 48 * 2);
-        text.setText(wold[count]);
-        text.setFont(new Font("Jacquard 24", Font.PLAIN, 16 * 2));
-        add(text);
-
         frame.setOpaque(false);
         frame.setBounds(430, 93, 244*2, 176*2);
-        add(frame);
-
+        frame.setFont(new Font("Jacquard 24", Font.PLAIN, 16 * 2));
+        someLabel.add(frame);
+        bg.add(someLabel);
+        add(bg);
+        setVisible(false);
 
         this.addMouseListener(new MouseAdapter() {
             @Override
@@ -116,6 +117,7 @@ public class RuleUI extends JPanel implements ActionListener {
         String order = e.getActionCommand();
         if (order.equals("close")){
             setVisible(false);
+            count = 0;
         }else if(order.equals("nextp")){
             if (count < card_BK.length - 1 ){
                 count++;
