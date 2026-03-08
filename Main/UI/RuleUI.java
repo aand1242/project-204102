@@ -29,10 +29,10 @@ public class RuleUI extends JPanel implements ActionListener {
     getScaledIcon("Main\\source_pic\\Shield_card.png"),
     };
     private ImageIcon[] card_detail = {getScaledIcon("Main\\source_pic\\recall_detail.png"), 
-    getScaledIcon("Main\\source_pic\\sniper_detail.png"),
+    getScaledIcon("Main\\source_pic\\rook_detail.png"),
     getScaledIcon("Main\\source_pic\\unicorn_detail.png"),
     getScaledIcon("Main\\source_pic\\moveplus_detail.png"),
-    getScaledIcon("Main\\source_pic\\Shield_card.png"),
+    getScaledIcon("Main\\source_pic\\shield_detail.png"),
     };
     public void setStartUI(StartUI a){
         startUI = a;

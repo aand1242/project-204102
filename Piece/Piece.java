@@ -63,9 +63,4 @@ public abstract class Piece {
     public abstract int getScore();
 
     public abstract Piece getCopy();
-    
-    public boolean getSheild(){
-        return hasShield;
-    }
-
 }
