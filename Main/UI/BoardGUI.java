@@ -147,10 +147,13 @@ public class BoardGUI extends JPanel implements ActionListener {
 
     }
 
-    public void resetColors() {
+    public void resetColors(Piece[][] pieces) {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
-                buttons[row][col].setHighlight(null); // ล้างสีไฮไลท์
+                if (pieces[row][col]!= null)
+                    if (!pieces[row][col].getSheild()){
+                        buttons[row][col].setHighlight(null); // ล้างสีไฮไลท์
+                    }
             }
         }
     }

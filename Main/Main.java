@@ -79,11 +79,11 @@ public class Main {
         ItemslotGUI leftslot = new ItemslotGUI(white.getScore(), gameLogic);
         leftslot.setPreferredSize(new Dimension(156 * 2, 360 * 2));
         leftslot.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 44 * 2));
-        leftslot.setBackground(Color.DARK_GRAY);
+        leftslot.setBackground(Color.LIGHT_GRAY);
         ItemslotGUI rightslot = new ItemslotGUI(black.getScore(), gameLogic);
         rightslot.setPreferredSize(new Dimension(156 * 2, 360 * 2));
         rightslot.setBorder(BorderFactory.createEmptyBorder(0, 44 * 2, 0, 0));
-        rightslot.setBackground(Color.DARK_GRAY);
+        rightslot.setBackground(Color.LIGHT_GRAY);
 
         Revive whRevive = new Revive(true);
         whRevive.setBounds(220 * 2, 80 * 2, 240 * 2, 160 * 2);

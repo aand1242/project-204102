@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 public class ItemslotGUI extends JPanel implements ActionListener {
 
@@ -35,6 +36,8 @@ public class ItemslotGUI extends JPanel implements ActionListener {
         gbc.insets = new Insets(0, 0, 12 * 2, 0);
         add(scoreLabel, gbc);
         for (int i = 0; i < 5; i++) {
+
+
             itemlist[i] = new JButton(IconItem[i]);
             itemlist[i].setPreferredSize(new Dimension(48 * 2, 48 * 2));
             itemlist[i].putClientProperty("item", i);

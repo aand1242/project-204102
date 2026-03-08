@@ -19,7 +19,7 @@ public class RuleUI extends JPanel implements ActionListener {
     private StartUI startUI;
     private JLabel cards ;
     private JLabel text = new JLabel();
-    private JLabel frame = new JLabel();
+    private JLabel frame;
     private int count;
     private String [] wold = {"bank", "pon", "mint", "pern", "gam"};
     private ImageIcon [] card_BK = {getScaledIcon("Main\\source_pic\\Recall_card.png"), 
@@ -28,7 +28,12 @@ public class RuleUI extends JPanel implements ActionListener {
     getScaledIcon("Main\\source_pic\\Moveplus_card.png"),
     getScaledIcon("Main\\source_pic\\Shield_card.png"),
     };
-
+    private ImageIcon[] card_detail = {getScaledIcon("Main\\source_pic\\recall_detail.png"), 
+    getScaledIcon("Main\\source_pic\\sniper_detail.png"),
+    getScaledIcon("Main\\source_pic\\unicorn_detail.png"),
+    getScaledIcon("Main\\source_pic\\moveplus_detail.png"),
+    getScaledIcon("Main\\source_pic\\Shield_card.png"),
+    };
     public void setStartUI(StartUI a){
         startUI = a;
     }
@@ -83,6 +88,7 @@ public class RuleUI extends JPanel implements ActionListener {
         // text.setText(wold[count]);
         // text.setFont(new Font("Jacquard 24", Font.PLAIN, 16 * 2));
         // add(text);
+        frame = new JLabel(card_detail[count]);
         frame.setOpaque(false);
         frame.setBounds(430, 93, 244*2, 176*2);
         frame.setFont(new Font("Jacquard 24", Font.PLAIN, 16 * 2));
@@ -123,12 +129,14 @@ public class RuleUI extends JPanel implements ActionListener {
                 count++;
                 cards.setIcon(card_BK[count]);
                 text.setText(wold[count]);
+                frame.setIcon(card_detail[count]);
             }
         }else if(order.equals("backp")){
             if (count != 0){
                 count--;
                 cards.setIcon(card_BK[count]);
                 text.setText(wold[count]);
+                frame.setIcon(card_detail[count]);
             }
         }
     }
