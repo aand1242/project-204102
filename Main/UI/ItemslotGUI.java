@@ -5,14 +5,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
+
 
 public class ItemslotGUI extends JPanel implements ActionListener {
 
     // for item slot with point at the two side im lazy
     private JButton[] itemlist = new JButton[5];
     private JLabel scoreLabel;
-
+    private final ImageIcon[] b_IconItem = {getScaledIcon("Main\\source_pic\\Recall_icon2.png"),
+        getScaledIcon("Main\\source_pic\\Sniper_icon2.png"),
+        getScaledIcon("Main\\source_pic\\Unicorn_icon2.png"),
+        getScaledIcon("Main\\source_pic\\Moveplus_icon2.png"),
+        getScaledIcon("Main\\source_pic\\Shield_icon2.png")};
     // Item Name
     private String[] itemList = {"RECALL", "SNIPER", "UNICORN", "MOVE+", "SHIELD"};
     private final ImageIcon[] IconItem = {getScaledIcon("Main\\source_pic\\Recall_icon.png"),
@@ -22,7 +26,7 @@ public class ItemslotGUI extends JPanel implements ActionListener {
         getScaledIcon("Main\\source_pic\\Shield_icon.png")};
     private GameControl controller;
 
-    public ItemslotGUI(int n, GameControl ctrl) {
+    public ItemslotGUI(int n, GameControl ctrl,boolean skin) {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         scoreLabel = new JLabel(Integer.toString(n));
@@ -36,9 +40,12 @@ public class ItemslotGUI extends JPanel implements ActionListener {
         gbc.insets = new Insets(0, 0, 12 * 2, 0);
         add(scoreLabel, gbc);
         for (int i = 0; i < 5; i++) {
+            if (skin){
+                itemlist[i] = new JButton(IconItem[i]);
+            }else{
+                itemlist[i] = new JButton(b_IconItem[i]);
+            }
 
-
-            itemlist[i] = new JButton(IconItem[i]);
             itemlist[i].setPreferredSize(new Dimension(48 * 2, 48 * 2));
             itemlist[i].putClientProperty("item", i);
             itemlist[i].putClientProperty("name", itemList[i]);

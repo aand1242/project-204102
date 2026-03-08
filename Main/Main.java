@@ -76,11 +76,11 @@ public class Main {
         Player black = new Player();
         gameLogic.setPlayer(white, black);
 
-        ItemslotGUI leftslot = new ItemslotGUI(white.getScore(), gameLogic);
+        ItemslotGUI leftslot = new ItemslotGUI(white.getScore(), gameLogic,true);
         leftslot.setPreferredSize(new Dimension(156 * 2, 360 * 2));
         leftslot.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 44 * 2));
         leftslot.setBackground(Color.LIGHT_GRAY);
-        ItemslotGUI rightslot = new ItemslotGUI(black.getScore(), gameLogic);
+        ItemslotGUI rightslot = new ItemslotGUI(black.getScore(), gameLogic,false);
         rightslot.setPreferredSize(new Dimension(156 * 2, 360 * 2));
         rightslot.setBorder(BorderFactory.createEmptyBorder(0, 44 * 2, 0, 0));
         rightslot.setBackground(Color.LIGHT_GRAY);
@@ -118,9 +118,19 @@ public class Main {
         stg.setRuleUI(ruleui);
         stg.setGamecontrol(gameLogic);
 
-        JPanel result_win = new JPanel();
+        JPanel result_win = new JPanel(){
+        @Override
+        protected void paintComponent(Graphics g) {
+            g.setColor(getBackground());
+            g.fillRect(0, 0, getWidth(), getHeight());
+            super.paintComponent(g);
+            }
+        };
+
         result_win.setBounds(0,0,1280,720);
         result_win.setVisible(false);
+        result_win.setOpaque(false);
+        result_win.setBackground(new Color(0,0,0,170));
         gameLogic.setWLscreen(result_win);
 
         layer.add(result_win,JLayeredPane.POPUP_LAYER);

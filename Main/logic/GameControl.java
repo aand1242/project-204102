@@ -17,12 +17,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class GameControl{
-    private JLabel text = new JLabel();
+    private JLabel winLB = new JLabel(getScaledIcon("Main\\source_pic\\victory.png"));
+    private JLabel loseLB= new JLabel(getScaledIcon("Main\\source_pic\\defeat.png"));
+    private JLabel drawLB =  new JLabel(getScaledIcon("Main\\source_pic\\stalemate.png"));
     private StartUI startUI;
     private JPanel WLscreen;
 
@@ -46,7 +49,6 @@ public class GameControl{
     private boolean currentTurn = true; // true = White, false = Black
     private boolean isPieceSelected = false;
 
-    private boolean isUseItem = false;
 
     private boolean isSniperActive = false;
     private boolean isReviveActive = false;
@@ -377,31 +379,40 @@ public class GameControl{
         if (!hasMoves) {
             if (inCheck) {
                 // รุกฆาต (Checkmate)
+                //win
                 WLscreen.setVisible(true);
-                text.setBounds(256,240,800,200);
+                
                 String winner = currentTurn ? "Black" : "White";
-                text.setText(winner + " WIN !");
-                text.setFont(new Font("Jacquard 24", Font.PLAIN, 125));
-                WLscreen.add(text);
+                //220 300
+                if (!currentTurn){
+                    winLB.setBounds(120,300,400,160);
+                    loseLB.setBounds(760,300,400,160);
+                }else{
+                    winLB.setBounds(760,300,200,160);
+                    loseLB.setBounds(120,300,200,160);
+                }
+                JPanel line = new JPanel();
+                line.setBounds(639,100,2,450);
+                WLscreen.add(line);
+                WLscreen.add(winLB);
+                WLscreen.add(loseLB);
                 System.out.println("CHECKMATE! " + winner + " wins!");
-                // TODO: คุณสามารถเรียกหน้าต่าง GUI แสดงผู้ชนะที่นี่
             } else {
                 WLscreen.setVisible(true);
-                text.setBounds(256,240,800,200);
-                text.setText("Draw !");
-                text.setFont(new Font("Jacquard 24", Font.PLAIN, 125));
-                WLscreen.add(text);
+                drawLB.setBounds(440,280,400,160);
+                WLscreen.add(drawLB);
                 // เสมอ (Stalemate)
                 System.out.println("STALEMATE! It's a draw!");
-                // TODO: คุณสามารถเรียกหน้าต่าง GUI แสดงผลเสมอที่นี่
             }
             JButton homeButton = new JButton();
-            homeButton.setBounds(604,450,72,72);
+            homeButton.setBounds(604,600,72,72);
             WLscreen.add(homeButton);
             homeButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    WLscreen.remove(text);
+                    WLscreen.remove(winLB);
+                    WLscreen.remove(loseLB);
+                    WLscreen.remove(drawLB);
                     WLscreen.setVisible(false);
                     startUI.setVisible(true);
                 }
@@ -728,6 +739,16 @@ public class GameControl{
         black.resetScore();
         rightGui.changeScore(black.getScore());
         currentTurn = true;
+    }
+    private static ImageIcon getScaledIcon(String path) {
+        ImageIcon originalIcon = new ImageIcon(path);
+
+        Image scaledImage = originalIcon.getImage().getScaledInstance(
+                originalIcon.getIconWidth() * 2,
+                originalIcon.getIconHeight() * 2,
+                Image.SCALE_REPLICATE
+        );
+        return new ImageIcon(scaledImage);
     }
 }
 
